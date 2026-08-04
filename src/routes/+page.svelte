@@ -6,10 +6,10 @@
 		'https://script.google.com/macros/s/AKfycbx8tqS4K17vtfr3yuAbqCH1JRPwsrhUK0SGyx_eD6Qv9IdirPLld9ht7lSD9RVauBzKyA/exec';
 
 	let scanner: Html5Qrcode;
-	let loading = false;
+	let loading = $state(false);
 
-	let result = '';
-	let success = false;
+	let result = $state('');
+	let success = $state(false);
 
 	async function startScanner() {
 		scanner = new Html5Qrcode('reader');
@@ -50,6 +50,8 @@
 			const text = await response.text();
 			const data = JSON.parse(text);
 
+			alert(data)
+
 			if (data.success) {
 				result = `
                     Nama      : ${data.name}
@@ -60,7 +62,6 @@
                 `;
 			} else {
 				result = data.message;
-				alert(data.message) 
 			}
 		} catch (e) {
 			console.error(e);
