@@ -36,7 +36,7 @@
 			);
 		} catch (e) {
 			console.error(e);
-			message = 'Tidak dapat membuka kamera.';
+			message = 'Camera not found.';
 		}
 	}
 
@@ -48,7 +48,7 @@
 		await scanner.stop();
 		scanned = true;
 
-		message = 'Memproses...';
+		message = 'Proccessing...';
 
 		try {
 			const url = `${API_URL}?qrCode=${encodeURIComponent(decodedText)}`;
@@ -71,7 +71,7 @@
 			}
 		} catch (e) {
 			console.error(e);
-			message = 'Terjadi kesalahan.';
+			message = 'Something went wrong.';
 			alert(String(e));
 		}
 
