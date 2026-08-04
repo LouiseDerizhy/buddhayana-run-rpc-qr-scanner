@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { Html5Qrcode } from 'html5-qrcode';
 	import { onDestroy, onMount } from 'svelte';
-	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	const API_URL =
-		'https://script.google.com/macros/s/AKfycbyoPimGUjueQ8eNMeVH49IGdnuM3IbYvrHB4CavlhiJf6lqbJtqSXgoxfXLCual9WtOeQ/exec';
+		'https://script.google.com/macros/s/AKfycbx8tqS4K17vtfr3yuAbqCH1JRPwsrhUK0SGyx_eD6Qv9IdirPLld9ht7lSD9RVauBzKyA/exec';
 
 	let scanner: Html5Qrcode;
 	let loading = false;
@@ -45,14 +44,9 @@
 		result = 'Memproses...';
 
 		try {
-			const body = new SvelteURLSearchParams();
-			body.append("qrCode", decodedText);
+			const url = `${API_URL}?qrCode=${encodeURIComponent(decodedText)}`;
 
-			const response = await fetch(API_URL, {
-				method: 'POST',
-				body
-			});
-
+			const response = await fetch(url);
 			const data = await response.json();
 			success = data.success;
 
