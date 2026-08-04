@@ -47,8 +47,8 @@
 			const url = `${API_URL}?qrCode=${encodeURIComponent(decodedText)}`;
 
 			const response = await fetch(url);
-			const data = await response.json();
-			success = data.success;
+			const text = await response.text();
+			const data = JSON.parse(text);
 
 			if (data.success) {
 				result = `
