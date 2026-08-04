@@ -6,10 +6,11 @@
 		'https://script.google.com/macros/s/AKfycbx8tqS4K17vtfr3yuAbqCH1JRPwsrhUK0SGyx_eD6Qv9IdirPLld9ht7lSD9RVauBzKyA/exec';
 
 	let scanner: Html5Qrcode;
-	let loading = $state(false);
-
 	let result = $state('');
+	let loading = $state(false);
+	let scanned = $state(false);
 	let success = $state(false);
+
 
 	async function startScanner() {
 		scanner = new Html5Qrcode('reader');
@@ -39,8 +40,12 @@
 
 	async function onScanSuccess(decodedText: string) {
 		if (loading) return;
+
 		loading = true;
-		await scanner.pause(true);
+
+		await scanner.stop();
+		scanned = true;
+
 		result = 'Memproses...';
 
 		try {
@@ -49,33 +54,39 @@
 			const response = await fetch(url);
 			const text = await response.text();
 			const data = JSON.parse(text);
+
 			success = data.success;
 
 			if (data.success) {
 				result = `
-                    Nama      : ${data.name}
-                    Community : ${data.community}
-                    Kategori  : ${data.category}
-                    Jersey    : ${data.jersey}
-                    BIB       : ${data.bib}
-                `;
+					Nama      : ${data.name}
+					Community : ${data.community}
+					Kategori  : ${data.category}
+					Jersey    : ${data.jersey}
+					BIB       : ${data.bib}
+				`;
 			} else {
-				result = data.message;
+				result = `
+					${data.message} pada ${data.timestamp}
+				`;
 			}
 		} catch (e) {
 			console.error(e);
 			success = false;
 			result = 'Terjadi kesalahan.';
-			alert(e)
-		} 
-		
-		setTimeout(async () => {
-			result = '';
-
-			await scanner.resume();
-		}, 2500);
+			alert(String(e));
+		}
 
 		loading = false;
+	}
+
+	async function scanAgain() {
+		result = '';
+		success = false;
+		loading = false;
+		scanned = false;
+
+		await startScanner();
 	}
 
 	onMount(startScanner);
@@ -91,13 +102,17 @@
 	<h1 class="mb-5 text-center text-2xl font-bold">
 		Buddhayana Run 2026 Medan
 		<br />
-		Racepack Collection 
+		Racepack Collection
 		<br />
 		QR Scanner
-    </h1>
-	<div class="overflow-hidden rounded-xl bg-white shadow">
-		<div id="reader"></div>
-	</div>
+	</h1>
+
+	{#if !scanned}
+		<div class="overflow-hidden rounded-xl bg-white shadow">
+			<div id="reader"></div>
+		</div>
+	{/if}
+
 	<div class="mt-5 rounded-xl bg-white p-5 shadow">
 		{#if loading}
 			<div class="text-center">
@@ -115,6 +130,13 @@
 					{result}
 				</div>
 			{/if}
+
+			<button
+				class="mt-6 w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
+				onclick={scanAgain}
+			>
+				Scan Lagi
+			</button>
 		{:else}
 			<div class="text-center text-gray-500">
 				Arahkan QR Code ke kamera
