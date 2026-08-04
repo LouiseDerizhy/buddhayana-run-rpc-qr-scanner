@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { TicketData } from '$lib/assets/schema';
     import { Html5Qrcode } from 'html5-qrcode';
-    import { onDestroy, onMount } from 'svelte';
+    import { onDestroy, onMount, tick } from 'svelte';
 
 	const API_URL =
 		'https://script.google.com/macros/s/AKfycbx8tqS4K17vtfr3yuAbqCH1JRPwsrhUK0SGyx_eD6Qv9IdirPLld9ht7lSD9RVauBzKyA/exec';
@@ -84,6 +84,7 @@
 		loading = false;
 		scanned = false;
 
+		await tick();
 		await startScanner();
 	}
 
