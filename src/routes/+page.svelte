@@ -60,6 +60,7 @@
                 `;
 			} else {
 				result = data.message;
+				alert(data.message) 
 			}
 		} catch (e) {
 			console.error(e);
@@ -86,8 +87,12 @@
 </script>
 
 <div class="mx-auto flex min-h-screen max-w-lg flex-col bg-gray-100 p-4">
-	<h1 class="mb-5 text-center text-3xl font-bold">
-		Racepack Scanner
+	<h1 class="mb-5 text-center text-2xl font-bold">
+		Buddhayana Run 2026 Medan
+		<br />
+		Racepack Collection 
+		<br />
+		QR Scanner
     </h1>
 	<div class="overflow-hidden rounded-xl bg-white shadow">
 		<div id="reader"></div>
