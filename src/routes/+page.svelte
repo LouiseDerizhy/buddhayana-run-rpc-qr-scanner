@@ -72,11 +72,14 @@
 			console.error(e);
 			success = false;
 			result = 'Terjadi kesalahan.';
+			alert(e)
 		}
 
 		setTimeout(async () => {
 			loading = false;
 			result = '';
+
+			alert("timeout")
 
 			await scanner.resume();
 		}, 2500);
