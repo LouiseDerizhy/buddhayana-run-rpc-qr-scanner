@@ -66,8 +66,8 @@
 				}
 				message = '';
 			} else {
-				racepackData = null
-				message = "Racepack has been collected at ${data.timestamp}";
+				racepackData = null;
+				message = `Racepack has been collected at ${data.timestamp}`;
 			}
 		} catch (e) {
 			console.error(e);
@@ -80,6 +80,7 @@
 
 	async function scanAgain() {
 		message = '';
+		racepackData = null;
 		loading = false;
 		scanned = false;
 
