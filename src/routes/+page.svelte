@@ -49,8 +49,7 @@
 			const response = await fetch(url);
 			const text = await response.text();
 			const data = JSON.parse(text);
-
-			alert(data)
+			success = data.success;
 
 			if (data.success) {
 				result = `
@@ -68,14 +67,15 @@
 			success = false;
 			result = 'Terjadi kesalahan.';
 			alert(e)
-		}
-
+		} 
+		
 		setTimeout(async () => {
-			loading = false;
 			result = '';
 
 			await scanner.resume();
 		}, 2500);
+
+		loading = false;
 	}
 
 	onMount(startScanner);
