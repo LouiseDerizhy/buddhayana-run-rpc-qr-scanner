@@ -1,0 +1,395 @@
+@import "tailwindcss";
+
+@theme {
+    --color-gray: #2b303b;
+    --color-lightgray: #373d49;
+    --color-green: #5cecc6;
+    --color-maroon: #c32148;
+    --color-yellow: #f8e9a1;
+    --color-navy: #0d192b;
+}
+
+@layer base {
+    * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+        scrollbar-color: #f8e9a1 #2b303b;
+        scrollbar-width: thin;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    table,
+    li {
+        user-select: none;
+    }
+
+    .ellipsis-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: horizontal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+
+    button,
+    a {
+        cursor: pointer;
+    }
+}
+
+@layer utilities {
+    .border-opacity-0 {
+        --tw-border-opacity: 0;
+    }
+
+    .border-opacity-100 {
+        --tw-border-opacity: 1;
+    }
+}
+
+@layer components {
+    .gradient-text {
+        background-image: linear-gradient(
+            -225deg,
+            #f8e9a1 0%,
+            #b72946 33%,
+            #6cf7b2 66%,
+            #f8e9a1 100%
+        );
+        background-size: 200% auto;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: textclip 3s linear infinite;
+    }
+
+    @keyframes textclip {
+        to {
+            background-position: 200% center;
+        }
+    }
+
+    @keyframes fadeInSlide {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fadeInSlide {
+        animation: fadeInSlide 0.25s ease forwards;
+    }
+
+    /* ICONS */
+
+    .fa-bars::before {
+        content: "\f0c9";
+    }
+
+    .fa-bicycle::before {
+        content: "\f206";
+    }
+
+    .fa-browser::before {
+        content: "\1f5d4";
+    }
+
+    .fa-calendar::before {
+        content: "\f133";
+    }
+
+    .fa-cart-shopping::before {
+        content: "\f07a";
+    }
+
+    .fa-cat::before {
+        content: "\1f408";
+    }
+
+    .fa-cheese-swiss::before {
+        content: "\1f9c0";
+    }
+
+    .fa-chevron-down::before {
+        content: "\f078";
+    }
+
+    .fa-chevron-left::before {
+        content: "\f053";
+    }
+
+    .fa-chevron-right::before {
+        content: "\f054";
+    }
+
+    .fa-code::before {
+        content: "\f121";
+    }
+
+    .fa-crown::before {
+        content: "\f521";
+    }
+
+    .fa-css::before {
+        content: "\e6a2";
+    }
+
+    .fa-cup-straw-swoosh::before {
+        content: "\e364";
+    }
+
+    .fa-database::before {
+        content: "\f1c0";
+    }
+
+    .fa-dharmachakra::before {
+        content: "\2638";
+    }
+
+    .fa-envelope::before {
+        content: "\f0e0";
+    }
+
+    .fa-eye::before {
+        content: "\f06e";
+    }
+
+    .fa-facebook-f::before {
+        content: "\f39e";
+    }
+
+    .fa-figma::before {
+        content: "\f799";
+    }
+
+    .fa-file::before {
+        content: "\f15b";
+    }
+
+    .fa-file-pdf::before {
+        content: "\f1c1";
+    }
+
+    .fa-gamepad-modern::before {
+        content: "\1f3ae";
+    }
+
+    .fa-git-alt::before {
+        content: "\f841";
+    }
+
+    .fa-github::before {
+        content: "\f09b";
+    }
+
+    .fa-html5::before {
+        content: "\f13b";
+    }
+
+    .fa-image::before {
+        content: "\f03e";
+    }
+
+    .fa-instagram::before {
+        content: "\f16d";
+    }
+
+    .fa-java::before {
+        content: "\f4e4";
+    }
+
+    .fa-js::before {
+        content: "\f3b8";
+    }
+
+    .fa-layer-group::before {
+        content: "\f5fd";
+    }
+
+    .fa-link::before {
+        content: "\f0c1";
+    }
+
+    .fa-linkedin-in::before {
+        content: "\f0e1";
+    }
+
+    .fa-location-dot::before {
+        content: "\f3c5";
+    }
+
+    .fa-magnifying-glass::before {
+        content: "\f002";
+    }
+
+    .fa-microphone::before {
+        content: "\f130";
+    }
+
+    .fa-microscope::before {
+        content: "\f610";
+    }
+
+    .fa-music::before {
+        content: "\1f3b5";
+    }
+
+    .fa-node-js::before {
+        content: "\f3d3";
+    }
+
+    .fa-npm::before {
+        content: "\f3d4";
+    }
+
+    .fa-paint-roller::before {
+        content: "\f5aa";
+    }
+
+    .fa-palette::before {
+        content: "\f53f";
+    }
+
+    .fa-pen-ruler::before {
+        content: "\f5ae";
+    }
+
+    .fa-print::before {
+        content: "\f02f";
+    }
+
+    .fa-python::before {
+        content: "\f3e2";
+    }
+
+    .fa-react::before {
+        content: "\f41b";
+    }
+
+    .fa-square-question::before {
+        content: "\f2fd";
+    }
+
+    .fa-stethoscope::before {
+        content: "\f0f1";
+    }
+
+    .fa-user::before {
+        content: "\1f464";
+    }
+
+    .fa-users::before {
+        content: "\f0c0";
+    }
+
+    .fa-vihara::before {
+        content: "\f6a7";
+    }
+
+    .fa-whatsapp::before {
+        content: "\f232";
+    }
+
+    .fa-xmark::before {
+        content: "\d7";
+    }
+
+    .fa-hand-holding-seeding::before {
+        content: "\f4bf";
+    }
+
+    .fa-light {
+        font-weight: 300;
+    }
+
+    .fa-regular {
+        font-weight: 400;
+    }
+
+    .fa-solid {
+        font-weight: 900;
+    }
+
+    @font-face {
+        font-family: "Font Awesome Pro";
+        font-style: normal;
+        font-weight: 300;
+        font-display: block;
+        src: url($lib/assets/font/fa-light-300.woff2) format("woff2");
+    }
+
+    @font-face {
+        font-family: "Font Awesome Pro";
+        font-style: normal;
+        font-weight: 900;
+        font-display: block;
+        src: url($lib/assets/font/fa-solid-900.woff2) format("woff2");
+    }
+
+    @font-face {
+        font-family: "Font Awesome Brands";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url($lib/assets/font/fa-brands-400.woff2) format("woff2");
+    }
+
+    .fa {
+        font-family: "Font Awesome Pro";
+        font-family: var(--fa-style-family, "Font Awesome Pro");
+        font-weight: 900;
+        font-weight: var(--fa-style, 900);
+    }
+
+    .fa,
+    .fa-brands,
+    .fa-light,
+    .fa-solid,
+    .fab {
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        display: inline-block;
+        display: var(--fa-display, inline-block);
+        font-style: normal;
+        font-variant: normal;
+        line-height: 1;
+        text-rendering: auto;
+    }
+
+    .fa-brands,
+    .fab {
+        font-family: "Font Awesome Brands";
+        font-weight: 400;
+    }
+
+    .fa-solid,
+    .fa-light,
+    .fa-regular {
+        font-family: "Font Awesome Pro";
+    }
+}
