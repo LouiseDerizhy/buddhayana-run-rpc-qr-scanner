@@ -4,7 +4,7 @@
     import { onDestroy, onMount, tick } from 'svelte';
 
 	const API_URL =
-		'https://script.google.com/macros/s/AKfycbx8tqS4K17vtfr3yuAbqCH1JRPwsrhUK0SGyx_eD6Qv9IdirPLld9ht7lSD9RVauBzKyA/exec';
+		'https://script.google.com/macros/s/AKfycbwd2X6vYLTBxa_tyCnzF_7t5s-IzZQX6S5D5bY4BaX3fILOImfpDJv0jcKVY_d44RDqAQ/exec';
 
 	let scanner: Html5Qrcode;
 	let message = $state('');
@@ -66,7 +66,12 @@
 				}
 				message = '';
 			} else {
-				racepackData = null;
+				racepackData = {
+					name: data.name,
+					community: data.community,
+					category: data.category,
+					jersey: data.jersey
+				}
 				message = `Racepack has been collected at ${data.timestamp}`;
 			}
 		} catch (e) {
@@ -120,6 +125,10 @@
 				</div>
 			</div>
 		{:else if racepackData}
+			<div class="text-red-600">
+				{message}
+			</div>
+
 			<table class="w-full border-collapse text-left">
 				<tbody>
 					<tr class="border-b">
@@ -141,17 +150,6 @@
 				</tbody>
 			</table>
 
-			<button
-				class="mt-6 w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
-				onclick={scanAgain}
-			>
-				Scan Again
-			</button>
-
-		{:else if message}
-			<div class="text-red-600">
-				{message}
-			</div>
 			<button
 				class="mt-6 w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
 				onclick={scanAgain}
