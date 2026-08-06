@@ -4,7 +4,7 @@
     import { onDestroy, onMount, tick } from 'svelte';
 
 	const API_URL =
-		'https://script.google.com/macros/s/AKfycbwInqQFDaOsFGoSKGgXv5Px6TOq92CV5VXJwQLE969bWJA-itxklg77mg-xXC8TtVoTmg/exec';
+		'https://script.google.com/macros/s/AKfycbzqjzDdu_IyCWykfoOL9ghkTZIs_RHWuucaA9paPXfRUXZ5DDMCAd-eUGnu-jNGZXZ1lA/exec';
 
 	let scanner: Html5Qrcode;
 	let message = $state('');
