@@ -95,7 +95,7 @@
 	}
 
 	function formatDateTime(isoString: string) {
-		return new Intl.DateTimeFormat('id-ID', {
+		return new Intl.DateTimeFormat('en-US', {
 			day: 'numeric',
 			month: 'long',
 			year: 'numeric',
@@ -137,10 +137,12 @@
 					Processing...
 				</div>
 			</div>
-		{:else if racepackData && message}
-			<div class="text-red-600">
-				{message}
-			</div>
+		{:else if racepackData}
+			{#if message}
+				<div class="text-red-600">
+					{message}
+				</div>
+			{/if}
 
 			<table class="w-full border-collapse text-left">
 				<tbody>
