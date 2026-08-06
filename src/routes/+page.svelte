@@ -4,7 +4,7 @@
     import { onDestroy, onMount, tick } from 'svelte';
 
 	const API_URL =
-		'https://script.google.com/macros/s/AKfycbylQ8cJPBRGFSzqeXldawQj3rser4ocr4GtZ50lUtXeLCSjVx7HDMrfhLU46IAZDHWATw/exec';
+		'https://script.google.com/macros/s/AKfycbwInqQFDaOsFGoSKGgXv5Px6TOq92CV5VXJwQLE969bWJA-itxklg77mg-xXC8TtVoTmg/exec';
 
 	let scanner: Html5Qrcode;
 	let message = $state('');
@@ -12,7 +12,6 @@
 	let scanned = $state(false);
 
 	let racepackData: TicketData | null = $state(null)
-
 
 	async function startScanner() {
 		scanner = new Html5Qrcode('reader');
@@ -72,7 +71,7 @@
 					category: data.category,
 					jersey: data.jersey
 				}
-				message = `Racepack has been collected at ${data.timestamp}.`;
+				message = `Racepack has been collected at ${formatDateTime(data.timestamp)}.`;
 			} else {
 				message = `Data not found.`;
 			}
@@ -93,6 +92,18 @@
 
 		await tick();
 		await startScanner();
+	}
+
+	function formatDateTime(isoString: string) {
+		return new Intl.DateTimeFormat('id-ID', {
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit',
+			second: '2-digit',
+			hour12: false
+		}).format(new Date(isoString));
 	}
 
 	onMount(startScanner);
