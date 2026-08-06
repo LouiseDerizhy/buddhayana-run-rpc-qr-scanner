@@ -4,7 +4,7 @@
     import { onDestroy, onMount, tick } from 'svelte';
 
 	const API_URL =
-		'https://script.google.com/macros/s/AKfycbwd2X6vYLTBxa_tyCnzF_7t5s-IzZQX6S5D5bY4BaX3fILOImfpDJv0jcKVY_d44RDqAQ/exec';
+		'https://script.google.com/macros/s/AKfycbylQ8cJPBRGFSzqeXldawQj3rser4ocr4GtZ50lUtXeLCSjVx7HDMrfhLU46IAZDHWATw/exec';
 
 	let scanner: Html5Qrcode;
 	let message = $state('');
@@ -57,7 +57,7 @@
 			const text = await response.text();
 			const data = JSON.parse(text);
 
-			if (data.success) {
+			if (data.success && data.exist) {
 				racepackData = {
 					name: data.name,
 					community: data.community,
@@ -65,14 +65,16 @@
 					jersey: data.jersey
 				}
 				message = '';
-			} else {
+			} else if (!data.success && data.exist) {
 				racepackData = {
 					name: data.name,
 					community: data.community,
 					category: data.category,
 					jersey: data.jersey
 				}
-				message = `Racepack has been collected at ${data.timestamp}`;
+				message = `Racepack has been collected at ${data.timestamp}.`;
+			} else {
+				message = `Data not found.`;
 			}
 		} catch (e) {
 			console.error(e);
@@ -124,7 +126,7 @@
 					Processing...
 				</div>
 			</div>
-		{:else if racepackData}
+		{:else if racepackData && message}
 			<div class="text-red-600">
 				{message}
 			</div>
@@ -150,6 +152,16 @@
 				</tbody>
 			</table>
 
+			<button
+				class="mt-6 w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
+				onclick={scanAgain}
+			>
+				Scan Again
+			</button>
+		{:else if !racepackData && message}
+			<div class="text-red-600">
+				{message}
+			</div>
 			<button
 				class="mt-6 w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
 				onclick={scanAgain}
