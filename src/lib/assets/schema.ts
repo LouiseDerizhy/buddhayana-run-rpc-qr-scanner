@@ -3,4 +3,5 @@ export type TicketData = {
     community: string;
     category: string;
     jersey: string;
+    bib: string;
 };
