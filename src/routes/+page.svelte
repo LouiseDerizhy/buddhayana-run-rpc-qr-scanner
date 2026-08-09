@@ -4,8 +4,10 @@
     import { Html5Qrcode } from "html5-qrcode";
     import { onDestroy, onMount, tick } from "svelte";
 
-    const API_URL =
-        "https://script.google.com/macros/s/AKfycbwkcSS1gMgI5JlB1UNKoGiisGSJdBusKGr3rRMXB4KpANupcTCBKNabV353ishiOTIIfg/exec";
+    const QR_API_URL =
+        "https://script.google.com/macros/s/AKfycbzjglL9KFvbVzUxmGWFMZ60-F9wvb6Wd8zTxduijrlb93rT7633g_ELF0VCL2w43ZB-aw/exec";
+    const BIB_API_URL =
+        "https://script.google.com/macros/s/AKfycbzG4n8E5StxS9fLprPiaG-ClWg9VpgXbFIU0nLctoNWw2CDtf9RttivWFdhP4k4bfB8/exec";
     const START_BIB = 0;
     const END_BIB = 2500
 
@@ -13,6 +15,8 @@
     let message = $state("");
     let loading = $state(false);
     let scanned = $state(false);
+    let bibInput = $state(false);
+    let qrCodeValue = $state("");
     let bib: number | undefined = $state(undefined);
 
     let racepackData: TicketData | null = $state(null);
@@ -45,15 +49,8 @@
 
     async function onScanSuccess(decodedText: string) {
         if (loading) return;
-        if (!bib) {
-            alert("Please fill the BIB Number");
-            return;
-        };
-        
-        if (!validateBib(bib.toString(), START_BIB, END_BIB)) {
-            alert(`BIB Number must between ${START_BIB} - ${END_BIB}`);
-            return ;
-        }
+
+        qrCodeValue = decodedText;
         
         loading = true;
 
@@ -63,7 +60,66 @@
         message = "Proccessing...";
 
         try {
-            const url = `${API_URL}?bib=${bib}&qrCode=${encodeURIComponent(decodedText)}`;
+            const url = `${QR_API_URL}?qrCode=${encodeURIComponent(decodedText)}`;
+
+            const response = await fetch(url);
+            const text = await response.text();
+            const data = JSON.parse(text);
+
+            if (data.success && data.exist) {
+                racepackData = {
+                    name: data.name,
+                    community: data.community,
+                    category: data.category,
+                    jersey: data.jersey,
+                    bib: data.bib,
+                };
+                
+                bibInput = true;
+                message = "";
+            } else if (!data.success && data.exist) {
+                racepackData = {
+                    name: data.name,
+                    community: data.community,
+                    category: data.category,
+                    jersey: data.jersey,
+                    bib: data.bib,
+                };
+
+                if (data.bib) {
+                    message = `Racepack has been collected at ${formatDateTime(data.timestamp)}.`;
+                } else {
+                    bibInput = true;
+                    message = "";
+                }
+            } else {
+                message = `Data not found.`;
+            }
+        } catch (e) {
+            console.error(e);
+            message = "Something went wrong.";
+            alert(String(e));
+        }
+
+        loading = false;
+    }
+
+    async function uploadBIB() {
+        if (!bib) {
+            alert("Please fill the BIB Number");
+            return;
+        };
+        
+        if (!validateBib(bib.toString(), START_BIB, END_BIB)) {
+            alert(`BIB Number must between ${START_BIB} - ${END_BIB}`);
+            return ;
+        }
+
+        loading = true;
+        message = "Proccessing...";
+
+         try {
+            const url = `${BIB_API_URL}?bib=${bib}&qrCode=${encodeURIComponent(qrCodeValue)}`;
 
             const response = await fetch(url);
             const text = await response.text();
@@ -78,17 +134,6 @@
                     bib: data.bib,
                 };
                 message = "";
-            } else if (!data.success && data.exist) {
-                racepackData = {
-					name: data.name,
-                    community: data.community,
-                    category: data.category,
-                    jersey: data.jersey,
-					bib: data.bib,
-                };
-                message = `Racepack has been collected at ${formatDateTime(data.timestamp)}.`;
-            } else {
-                message = `Data not found.`;
             }
         } catch (e) {
             console.error(e);
@@ -96,7 +141,8 @@
             alert(String(e));
         }
 
-        bib = undefined
+        bibInput = false;
+        bib = undefined;
         loading = false;
     }
 
@@ -105,6 +151,7 @@
         racepackData = null;
         loading = false;
         scanned = false;
+        bibInput = false;
 
         await tick();
         await startScanner();
@@ -126,20 +173,28 @@
         Racepack Collection QR Scanner
     </h1>
 
-	<div class="relative flex items-center justify-center gap-4">
-        <div class="text-gray-500">
-            BIB
+    {#if bibInput && !loading}
+        <div class="relative flex items-center justify-center gap-4">
+            <div class="text-gray-500">
+                BIB
+            </div>
+            <input
+                type="text"
+                inputmode="numeric"
+                placeholder="Fill BIB Number"
+                bind:value={bib}
+                maxlength="4"
+                pattern="[0-9]{4}"
+                class="text-gray w-full rounded-xl bg-white px-12 py-3 shadow"
+                />
+            <button
+                    class="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
+                    onclick={uploadBIB}
+                >
+                Upload BIB
+            </button>
         </div>
-        <input
-            type="text"
-            inputmode="numeric"
-            placeholder="Fill BIB Number"
-            bind:value={bib}
-            maxlength="4"
-            pattern="[0-9]{4}"
-            class="text-gray w-full rounded-xl bg-white px-12 py-3 shadow"
-        />
-    </div>
+    {/if}
 
     {#if !scanned}
         <div class="overflow-hidden rounded-xl bg-white shadow mt-4">
