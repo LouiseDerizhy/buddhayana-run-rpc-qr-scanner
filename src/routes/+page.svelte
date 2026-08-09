@@ -128,9 +128,9 @@
     </h1>
 
 	<div class="relative flex items-center justify-center gap-4">
-	<div class="text-gray-500">
-		BIB
-	</div>
+        <div class="text-gray-500">
+            BIB
+        </div>
         <input
             type="number"
             placeholder="BIB"
@@ -140,7 +140,7 @@
     </div>
 
     {#if !scanned}
-        <div class="overflow-hidden rounded-xl bg-white shadow">
+        <div class="overflow-hidden rounded-xl bg-white shadow mt-4">
             <div id="reader"></div>
         </div>
     {/if}
