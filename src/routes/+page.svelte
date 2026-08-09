@@ -42,10 +42,13 @@
 
     async function onScanSuccess(decodedText: string) {
         if (loading) return;
-
+        if (!bib) {
+            alert("Please fill the BIB Number");
+            return;
+        };
+        
         loading = true;
 
-        if (!bib) return;
 
         await scanner.stop();
         scanned = true;
