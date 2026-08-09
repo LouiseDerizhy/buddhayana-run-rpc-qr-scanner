@@ -10,7 +10,7 @@
     let message = $state("");
     let loading = $state(false);
     let scanned = $state(false);
-    let bib = $state(0);
+    let bib: number | undefined = $state(undefined);
 
     let racepackData: TicketData | null = $state(null);
 
@@ -89,6 +89,7 @@
             alert(String(e));
         }
 
+        bib = undefined
         loading = false;
     }
 
@@ -177,6 +178,10 @@
                     <tr>
                         <th class="py-2 font-semibold">Jersey</th>
                         <td class="py-2">{racepackData.jersey}</td>
+                    </tr>
+                    <tr>
+                        <th class="py-2 font-semibold">BIB</th>
+                        <td class="py-2">{racepackData.bib}</td>
                     </tr>
                 </tbody>
             </table>
