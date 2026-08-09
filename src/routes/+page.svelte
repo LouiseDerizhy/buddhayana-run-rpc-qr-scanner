@@ -45,6 +45,8 @@
 
         loading = true;
 
+        if (!bib) return;
+
         await scanner.stop();
         scanned = true;
 
@@ -137,7 +139,7 @@
         />
     </div>
 
-    {#if !scanned && bib}
+    {#if !scanned}
         <div class="overflow-hidden rounded-xl bg-white shadow">
             <div id="reader"></div>
         </div>
