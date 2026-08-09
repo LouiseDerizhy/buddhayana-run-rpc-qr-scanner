@@ -1,10 +1,13 @@
 <script lang="ts">
     import type { TicketData } from "$lib/assets/schema";
+    import { formatDateTime, validateBib } from "$lib/utils";
     import { Html5Qrcode } from "html5-qrcode";
     import { onDestroy, onMount, tick } from "svelte";
 
     const API_URL =
         "https://script.google.com/macros/s/AKfycbwkcSS1gMgI5JlB1UNKoGiisGSJdBusKGr3rRMXB4KpANupcTCBKNabV353ishiOTIIfg/exec";
+    const START_BIB = 0;
+    const END_BIB = 2500
 
     let scanner: Html5Qrcode;
     let message = $state("");
@@ -47,8 +50,12 @@
             return;
         };
         
+        if (!validateBib(bib.toString(), START_BIB, END_BIB)) {
+            alert(`BIB Number must between ${START_BIB} - ${END_BIB}`);
+            return ;
+        }
+        
         loading = true;
-
 
         await scanner.stop();
         scanned = true;
@@ -103,18 +110,6 @@
         await startScanner();
     }
 
-    function formatDateTime(isoString: string) {
-        return new Intl.DateTimeFormat("en-US", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false,
-        }).format(new Date(isoString));
-    }
-
     onMount(startScanner);
 
     onDestroy(async () => {
@@ -136,10 +131,13 @@
             BIB
         </div>
         <input
-            type="number"
-            placeholder="BIB"
+            type="text"
+            inputmode="numeric"
+            placeholder="Fill BIB Number"
             bind:value={bib}
-            class="text-gray w-full rounded-xl bg-white py-3 px-12 shadow"
+            maxlength="4"
+            pattern="[0-9]{4}"
+            class="text-gray w-full rounded-xl bg-white px-12 py-3 shadow"
         />
     </div>
 
