@@ -4,7 +4,7 @@
     import { onDestroy, onMount, tick } from "svelte";
 
     const API_URL =
-        "https://script.google.com/macros/s/AKfycbw1GsMt9gu6DuZLrcbvyv5767W4VtG7q6tEVMiq0vmhsJ8nFFF5t0Fwyhq2kUF64Ijbjg/exec";
+        "https://script.google.com/macros/s/AKfycbwkcSS1gMgI5JlB1UNKoGiisGSJdBusKGr3rRMXB4KpANupcTCBKNabV353ishiOTIIfg/exec";
 
     let scanner: Html5Qrcode;
     let message = $state("");
@@ -175,7 +175,7 @@
                         <th class="py-2 font-semibold">Category</th>
                         <td class="py-2">{racepackData.category}</td>
                     </tr>
-                    <tr>
+                    <tr class="border-b">
                         <th class="py-2 font-semibold">Jersey</th>
                         <td class="py-2">{racepackData.jersey}</td>
                     </tr>
