@@ -5,9 +5,9 @@
     import { onDestroy, onMount, tick } from "svelte";
 
     const QR_API_URL =
-        "https://script.google.com/macros/s/AKfycbzjglL9KFvbVzUxmGWFMZ60-F9wvb6Wd8zTxduijrlb93rT7633g_ELF0VCL2w43ZB-aw/exec";
+        "https://script.google.com/macros/s/AKfycbwfboFMu95yV7m9BpZ8hctEsXEaA6FdsoT19AG4Xo8TPJpC-90xvBHzEgcw3K68Nv54CQ/exec";
     const BIB_API_URL =
-        "https://script.google.com/macros/s/AKfycbzG4n8E5StxS9fLprPiaG-ClWg9VpgXbFIU0nLctoNWw2CDtf9RttivWFdhP4k4bfB8/exec";
+        "https://script.google.com/macros/s/AKfycby9oW_QGtz9DVx7pB9Kwb3Ddcb9C3JAA_4hqtuNbvJvLG-nmdW6dCKNDfxK00RZ4uf6/exec";
     const START_BIB = 0;
     const END_BIB = 2500
 
