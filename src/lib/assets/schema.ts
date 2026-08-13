@@ -3,5 +3,6 @@ export type TicketData = {
     community: string;
     category: string;
     jersey: string;
+    gender: string;
     bib: string;
 };

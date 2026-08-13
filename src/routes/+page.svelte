@@ -5,9 +5,9 @@
     import { onDestroy, onMount, tick } from "svelte";
 
     const QR_API_URL =
-        "https://script.google.com/macros/s/AKfycbx7tby0epc3Sv9Lt3YwaiagPzX6v848-eTR_YpKxr0xj8OzAE0s0TyjL7tZeL3EprgTrw/exec";
+        "https://script.google.com/macros/s/AKfycbz-mFwz26uMwFe0W9KqEnf2epmMIH7CMMXQNRTnqn4v_u788jUno5j70sz6X73UMk3rqg/exec";
     const BIB_API_URL =
-        "https://script.google.com/macros/s/AKfycbzqm4Qhl9BJYdz0CKXgTykh-3rEciKN04IWO5FfCfqXV5VR9o8ZpIJiyV7Ha8mo62jN/exec";
+        "https://script.google.com/macros/s/AKfycbxUJkmFjlMNGXZXJNZOtvoz245P2fHwJ9SjVNwodmLX9cPjtQuvq9cvG49QdXBI6yLQ/exec";
     const START_BIB = 0;
     const END_BIB = 2500
 
@@ -72,6 +72,7 @@
                     community: data.community,
                     category: data.category,
                     jersey: data.jersey,
+                    gender: data.gender,
                     bib: data.bib,
                 };
                 
@@ -83,6 +84,7 @@
                     community: data.community,
                     category: data.category,
                     jersey: data.jersey,
+                    gender: data.gender,
                     bib: data.bib,
                 };
 
@@ -131,6 +133,7 @@
                     community: data.community,
                     category: data.category,
                     jersey: data.jersey,
+                    gender: data.gender,
                     bib: data.bib,
                 };
                 message = "";
@@ -231,6 +234,10 @@
                     <tr class="border-b">
                         <th class="py-2 font-semibold">Jersey</th>
                         <td class="py-2">{racepackData.jersey}</td>
+                    </tr>
+                    <tr class="border-b">
+                        <th class="py-2 font-semibold">Gender</th>
+                        <td class="py-2">{racepackData.gender}</td>
                     </tr>
                     <tr>
                         <th class="py-2 font-semibold">BIB</th>
